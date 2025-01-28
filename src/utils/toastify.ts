@@ -1,11 +1,11 @@
 import { toast } from 'sonner';
 
-interface ToastifyParams {
+interface IToastify {
   variant: 'success' | 'error' | 'warn' | 'info';
   message: string;
 }
 
-export const Toastify = ({ variant, message }: ToastifyParams) => {
+export const Toastify = ({ variant, message }: IToastify) => {
   switch (variant) {
     case 'success':
       toast.success(` ${message}`);
