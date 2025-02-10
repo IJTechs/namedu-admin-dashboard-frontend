@@ -1,7 +1,7 @@
 import { Outlet } from 'react-router-dom';
 const Content = () => {
   return (
-    <main className="flex-1 h-screen bg-white shadow-sm rounded-14">
+    <main className="flex-1 rounded-14">
       <Outlet />
     </main>
   );

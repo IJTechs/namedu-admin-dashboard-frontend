@@ -9,11 +9,7 @@ const NotFound = () => {
       <p>
         Kechirasiz, siz izlayotgan sahifa topilmadi <br /> yoki endi mavjud emas
       </p>
-      <Button
-        onClick={() => navigate('/', { replace: true })}
-        variant="default"
-        className="!mt-10"
-      >
+      <Button onClick={() => navigate('/', { replace: true })} variant="default" className="!mt-10">
         Bosh sahifaga qaytish
       </Button>
     </div>

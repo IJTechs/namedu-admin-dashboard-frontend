@@ -19,25 +19,24 @@ export const API_URLS = {
   },
 
   // User Endpoints
-  USER: {
-    BASE: `${BASE_URL}/users`,
-    CREATE: `${BASE_URL}/users/create`,
-    GET_BY_ID: (user_id: string) => `${BASE_URL}/users/${user_id}`,
-    UPDATE: (user_id: string) => `${BASE_URL}/users/${user_id}`,
-    DELETE: (user_id: string) => `${BASE_URL}/users/${user_id}`,
-    CHANGE_PASSWORD: (user_id: string) =>
-      `${BASE_URL}/users/${user_id}/change-password`,
-    CONTROL_STATUS: (user_id: string) => `${BASE_URL}/users/${user_id}/control`,
-    MANAGE_ROLE: (user_id: string) => `${BASE_URL}/users/${user_id}/role`,
+  ADMIN: {
+    BASE: `${BASE_URL}/admins`,
+    CREATE: `${BASE_URL}/admins/create`,
+    GET_BY_ID: (admin_id: string) => `${BASE_URL}/admins/${admin_id}`,
+    UPDATE: (admin_id: string) => `${BASE_URL}/admins/${admin_id}`,
+    DELETE: (admin_id: string) => `${BASE_URL}/admins/${admin_id}`,
+    CHANGE_PASSWORD: `${BASE_URL}/admins/change-password`,
+    CHANGE_STATUS: (admin_id: string) => `${BASE_URL}/admins/${admin_id}/control`,
+    CHANGE_ROLE: (admin_id: string) => `${BASE_URL}/admins/${admin_id}/role`,
   },
 
   // Telegram Endpoints
   TELEGRAM: {
-    CREATE: `${BASE_URL}/telegram/add`,
-    GET_BY_ID: (telegram_id: string) => `${BASE_URL}/telegram/${telegram_id}`,
-    BY_LINKED_ADMIN: (linked_admin: string) =>
-      `${BASE_URL}/telegram/${linked_admin}`,
-    UPDATE: (telegram_id: string) => `${BASE_URL}/telegram/${telegram_id}`,
-    DELETE: (telegram_id: string) => `${BASE_URL}/telegram/${telegram_id}`,
+    BASE: `${BASE_URL}/telegrams`,
+    CREATE: `${BASE_URL}/telegrams/add`,
+    GET_BY_ID: (telegram_id: string) => `${BASE_URL}/telegrams/${telegram_id}`,
+    BY_LINKED_ADMIN: (linked_admin: string) => `${BASE_URL}/telegrams/${linked_admin}`,
+    UPDATE: (telegram_id: string) => `${BASE_URL}/telegrams/${telegram_id}`,
+    DELETE: (telegram_id: string) => `${BASE_URL}/telegrams/${telegram_id}`,
   },
 };

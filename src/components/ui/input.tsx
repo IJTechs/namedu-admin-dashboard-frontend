@@ -24,8 +24,7 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
     const [isPasswordVisible, setIsPasswordVisible] = React.useState(false);
     const [isFocused, setIsFocused] = React.useState(false);
 
-    const togglePasswordVisibility = () =>
-      setIsPasswordVisible(!isPasswordVisible);
+    const togglePasswordVisibility = () => setIsPasswordVisible(!isPasswordVisible);
     const handleFocus = () => setIsFocused(true);
     const handleBlur = () => setIsFocused(false);
 
@@ -40,11 +39,7 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
     return (
       <div className="flex flex-col relative">
         {/* Label */}
-        <label
-          className={`${labelClassname} text-sm font-extralight font-montserrat`}
-        >
-          {label}
-        </label>
+        <label className={`${labelClassname} text-sm font-extralight font-montserrat`}>{label}</label>
 
         <div className="relative">
           {type === 'tel' ? (
@@ -64,13 +59,7 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
           ) : (
             <input
               autoComplete="off"
-              type={
-                type === 'password'
-                  ? isPasswordVisible
-                    ? 'text'
-                    : 'password'
-                  : type
-              }
+              type={type === 'password' ? (isPasswordVisible ? 'text' : 'password') : type}
               value={value}
               placeholder={placeholder}
               onChange={onChange}

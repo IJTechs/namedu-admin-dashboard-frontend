@@ -2,9 +2,7 @@ import { useAuth } from '@/hooks/use-auth';
 import { Navigate } from 'react-router-dom';
 import React from 'react';
 
-const ProtectedRoute: React.FC<{ children: React.ReactNode }> = ({
-  children,
-}) => {
+export const ProtectedRoute: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const { isAuthenticated, isLoading } = useAuth();
 
   if (isLoading) return null;
@@ -13,5 +11,3 @@ const ProtectedRoute: React.FC<{ children: React.ReactNode }> = ({
 
   return <>{children}</>;
 };
-
-export default ProtectedRoute;

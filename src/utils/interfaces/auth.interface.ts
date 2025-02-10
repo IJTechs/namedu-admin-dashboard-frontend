@@ -1,17 +1,15 @@
-export interface IUserLoginData {
+export interface IAdminLoginData {
   username: string;
   password: string;
 }
 
-export interface IUserResponse {
+export interface IAdminResponse {
   status: string;
-  accessToken: string;
-  refreshToken: string;
-  user: {
+  admin: {
     _id: string;
     full_name: string;
     username: string;
-    role: string;
+    role: 'ADMIN' | 'SUPER_ADMIN';
     isActive: boolean;
     linkedWebsites?: string[];
     createdAt: string;
@@ -19,5 +17,21 @@ export interface IUserResponse {
     __v: number;
     passwordChangedAt: string;
     telegram: string;
+    password?: string;
   };
+}
+
+export interface IAdmin {
+  _id: string;
+  full_name: string;
+  username: string;
+  password?: string;
+  role: 'ADMIN' | 'SUPER_ADMIN';
+  isActive: boolean;
+  linkedWebsites?: string[];
+  createdAt: string;
+  updatedAt: string;
+  passwordChangedAt?: string;
+  telegram: string;
+  __v: number;
 }

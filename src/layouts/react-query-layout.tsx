@@ -21,9 +21,7 @@ export const ReactQueryLayout = ({ children }: { children: ReactNode }) => {
     <QueryClientProvider client={client}>
       {children}
 
-      {import.meta.env.VITE_REACT_APP_NODE_ENV !== 'production' && (
-        <ReactQueryDevtools initialIsOpen={false} />
-      )}
+      {import.meta.env.VITE_REACT_APP_NODE_ENV !== 'production' && <ReactQueryDevtools initialIsOpen={false} />}
     </QueryClientProvider>
   );
 };

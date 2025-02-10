@@ -8,7 +8,7 @@ import { INews, INewsData } from '@utils/interfaces/news.interface';
 
 // Fetch all news
 export const useNewsQuery = () => {
-  return useQuery<INews[], Error>({
+  return useQuery<INews, Error>({
     queryKey: [QUERY_KEYS.NEWS.ALL],
     queryFn: fetchAllNews,
   });
@@ -19,5 +19,6 @@ export const useNewsByIdQuery = (newsId: string) => {
   return useQuery<INewsData, Error>({
     queryKey: [QUERY_KEYS.NEWS.DETAILS(newsId)],
     queryFn: () => fetchNewsById(newsId),
+    enabled: !!newsId,
   });
 };

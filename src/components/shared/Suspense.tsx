@@ -6,8 +6,6 @@ interface SuspenseProps {
   children: React.ReactNode;
 }
 
-const Suspense = ({ children }: SuspenseProps) => {
+export const Suspense = ({ children }: SuspenseProps) => {
   return <React.Suspense fallback={<Loader />}>{children}</React.Suspense>;
 };
-
-export default Suspense;

@@ -5,23 +5,21 @@ export const QUERY_KEYS = {
   },
 
   AUTH: {
-    USER: ['auth', 'user'] as const,
+    USER: ['auth', 'admin'] as const,
   },
 
-  USER: {
-    ALL: ['users'] as const,
-    DETAILS: (userId: string) => ['users', userId] as const,
-    PROFILE: (userId: string) => ['users', userId, 'profile'] as const,
-    CHANGE_PASSWORD: (userId: string) =>
-      ['users', userId, 'change-password'] as const,
-    CONTROL_STATUS: (userId: string) =>
-      ['users', userId, 'control-status'] as const,
-    MANAGE_ROLE: (userId: string) => ['users', userId, 'manage-role'] as const,
+  ADMIN: {
+    ALL: ['admins'] as const,
+    DETAILS: (adminId: string) => ['admins', adminId] as const,
+    PROFILE: (adminId: string) => ['admins', adminId, 'profile'] as const,
+    CHANGE_PASSWORD: (adminId: string) => ['admins', adminId, 'change-password'] as const,
+    CONTROL_STATUS: (adminId: string) => ['admins', adminId, 'control-status'] as const,
+    MANAGE_ROLE: (adminId: string) => ['admins', adminId, 'manage-role'] as const,
   },
 
   TELEGRAM: {
     ALL: ['telegram'] as const,
     DETAILS: (telegramId: string) => ['telegram', telegramId] as const,
-    BY_ADMIN: (adminId: string) => ['telegram', 'admin', adminId] as const,
+    BY_LINKED_ADMIN: (adminId: string) => ['telegram', 'admin', adminId] as const,
   },
 };
