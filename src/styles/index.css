@@ -30,26 +30,10 @@
     --color-green: #2ecc71;
     --color-red: #ef4136;
 
-    --secondary-soft: linear-gradient(
-      112.83deg,
-      rgba(255, 255, 255, 0.06) 0%,
-      rgba(255, 255, 255, 0.01) 110.84%
-    );
-    --secondary-bold: linear-gradient(
-      112.83deg,
-      rgba(255, 255, 255, 0.141) 0%,
-      rgba(255, 255, 255, 0.03) 110.84%
-    );
-    --secondary-strong: linear-gradient(
-      103.97deg,
-      rgba(255, 255, 255, 0.16) 9.96%,
-      rgba(255, 255, 255, 0.06) 89.49%
-    );
-    --secondary-deep: linear-gradient(
-      112.83deg,
-      rgba(255, 255, 255, 0.329) 0%,
-      rgba(255, 255, 255, 0.14) 110.84%
-    );
+    --secondary-soft: linear-gradient(112.83deg, rgba(255, 255, 255, 0.06) 0%, rgba(255, 255, 255, 0.01) 110.84%);
+    --secondary-bold: linear-gradient(112.83deg, rgba(255, 255, 255, 0.141) 0%, rgba(255, 255, 255, 0.03) 110.84%);
+    --secondary-strong: linear-gradient(103.97deg, rgba(255, 255, 255, 0.16) 9.96%, rgba(255, 255, 255, 0.06) 89.49%);
+    --secondary-deep: linear-gradient(112.83deg, rgba(255, 255, 255, 0.329) 0%, rgba(255, 255, 255, 0.14) 110.84%);
 
     /* Shadcn colors */
     --background: 0 0% 100%;

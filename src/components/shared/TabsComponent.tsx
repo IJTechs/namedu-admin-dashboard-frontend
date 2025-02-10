@@ -33,7 +33,7 @@ const TabsComponent: React.FC<TabsComponentProps> = ({
       <TabsList
         className={`w-full mb-16 flex flex-wrap justify-start items-center gap-2 overflow-x-auto p-2 xxs:justify-center sm:gap-4 lg:gap-6 ${tabsListClassName}`}
       >
-        {tabs.map((tab) =>
+        {tabs.map(tab =>
           tab.path ? (
             <NavLink
               key={tab.value}
@@ -41,10 +41,8 @@ const TabsComponent: React.FC<TabsComponentProps> = ({
               end
               className={({ isActive }) =>
                 cn(
-                  'inline-flex items-center justify-center whitespace-nowrap rounded-[8px] w-[160px] md:w-[180px] lg:w-[190px] h-[45px] text-xl font-regular font-montserrat transition-all focus-visible:outline-none focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50',
-                  isActive
-                    ? 'bg-primaryAccent500 text-white'
-                    : 'bg-secondary-bold text-gray'
+                  'inline-flex items-center justify-center whitespace-nowrap rounded-[8px] w-[160px] md:w-[180px] lg:w-[240px] h-[45px] text-md font-regular font-montserrat transition-all focus-visible:outline-none focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50',
+                  isActive ? 'bg-sky-300 text-white' : 'bg-slate-200 text-black'
                 )
               }
             >
@@ -59,7 +57,7 @@ const TabsComponent: React.FC<TabsComponentProps> = ({
       </TabsList>
 
       <div className={`${tabsContentClassName}`}>
-        {tabs.map((tab) => (
+        {tabs.map(tab => (
           <TabsContent key={tab.value} value={tab.value}>
             {tab.content}
           </TabsContent>

@@ -6,11 +6,9 @@ export interface InputProps {
   id?: string;
   type?: string;
   placeholder?: string;
-  onChange?: (
-    event: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>
-  ) => void;
+  onChange?: (event: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) => void;
   label?: string;
-  value?: string;
+  value?: string | number;
   disabled?: boolean;
   required?: boolean;
   className?: string;

@@ -56,8 +56,7 @@ class ErrorBoundary extends Component<ErrorBoundaryProps, ErrorBoundaryState> {
         <div className="bg-primary-background w-full h-screen flex flex-col items-center justify-center text-black">
           <div className="text-center text-xl  space-y-7">
             <p>
-              Yuzaga kelgan noqulayliklar uchun uzr so&apos;raymiz. <br />{' '}
-              Xatolik tez orada bartaraf etiladi.
+              Yuzaga kelgan noqulayliklar uchun uzr so&apos;raymiz. <br /> Xatolik tez orada bartaraf etiladi.
             </p>
             <Button
               variant="outline"

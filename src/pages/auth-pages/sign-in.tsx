@@ -8,6 +8,7 @@ import { Button } from '@/components/shared/Button';
 import { Toastify } from '@/utils/toastify';
 import { userFormSchema } from '@/utils/validators/auth.validators';
 import { useUserLoginMutation } from '@/react-query/mutations/auth.mutations';
+import { IAxiosError } from '@/utils/interfaces/axios-error.interface';
 const SignIn = () => {
   const navigate = useNavigate();
   const location = useLocation();
@@ -31,14 +32,22 @@ const SignIn = () => {
 
   const onSubmit = async (data: z.infer<typeof userFormSchema>) => {
     try {
-      const response = await userLogin(data);
-      console.log(response);
+      await userLogin(data);
       Toastify({
         variant: 'success',
         message: 'Tizimga muvaffaqiyatli kirdingiz!',
       });
       navigate(from, { replace: true });
     } catch (error) {
+      const axiosError = error as IAxiosError;
+
+      if (axiosError?.response?.status === 400) {
+        Toastify({
+          variant: 'error',
+          message: "Foydalanuvchi nomi yoki parol noto'g'ri!",
+        });
+        return;
+      }
       Toastify({
         variant: 'error',
         message: "Xatolik yuz berdi, iltimos qayta urinib ko'ring!",
@@ -54,21 +63,14 @@ const SignIn = () => {
           onSubmit={methods.handleSubmit(onSubmit)}
           className="w-full max-w-[450px] bg-white rounded-14  p-6 xs:p-10 sm:px-12 space-y-6"
         >
-          <h1 className="text-xl sm:text-2xl text-slate-500 text-center  ">
-            Tizimga Kirish
-          </h1>
+          <h1 className="text-xl sm:text-2xl text-primary-heading text-center  ">Tizimga Kirish</h1>
 
           <FormField
             name="username"
             render={({ field }) => (
               <FormItem>
                 <FormControl>
-                  <Input
-                    id="email"
-                    {...field}
-                    placeholder="Foydalanuvchi nomi"
-                    hasError={!!errors.username}
-                  />
+                  <Input id="email" {...field} placeholder="Foydalanuvchi nomi" hasError={!!errors.username} />
                 </FormControl>
               </FormItem>
             )}

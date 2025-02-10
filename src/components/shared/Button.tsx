@@ -11,9 +11,9 @@ const buttonVariants = cva(
       variant: {
         default: 'text-neutral-50 bg-primary-button',
         destructive:
-          'bg-red-500 text-neutral-50 hover:bg-red-500/90 dark:bg-red-900 dark:text-neutral-50 dark:hover:bg-red-900/90',
-        outline: 'border border-neutral-200 ',
-        secondary: 'text-neutral-900',
+          'bg-rose-500 text-neutral-50 hover:bg-red-500/90 dark:bg-red-900 dark:text-neutral-50 dark:hover:bg-red-900/90',
+        outline: 'border border-slate-200  ',
+        secondary: 'text-neutral-900  ',
         ghost: ' p-0 m-0 h-fit ',
         link: 'text-neutral-900 underline-offset-4 hover:underline dark:text-neutral-50',
         icon: 'p-0 m-0 h-fit w-fit text-[#5791FF]',
@@ -53,16 +53,7 @@ export interface ButtonProps
 
 const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
   (
-    {
-      className,
-      variant,
-      size,
-      asChild = false,
-      loading = false,
-      loadingText = '',
-      activeScale = 0.95,
-      ...props
-    },
+    { className, variant, size, asChild = false, loading = false, loadingText = '', activeScale = 0.95, ...props },
     ref
   ) => {
     const [pressed, setPressed] = React.useState(false);
