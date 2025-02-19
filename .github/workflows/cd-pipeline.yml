@@ -1,0 +1,125 @@
+name: Create and Deploy Release
+
+on:
+  push:
+    branches:
+      - main
+      - develop
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        branch: [main, develop]
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Install Yarn
+        run: |
+          if ! yarn --version; then npm install -g yarn; fi
+
+      - name: Clean Build Directory
+        run: rm -rf ./dist/*
+
+      # Release Version Handling (Only for Main)
+      - name: Determine Current Release Version
+        if: ${{ matrix.branch == 'main' }}
+        id: current_version
+        run: |
+          VERSION_FILE="app-version.txt"
+          if [ ! -f "$VERSION_FILE" ]; then
+            echo "No app-version.txt found. Using default 0.1.0"
+            CURRENT_VERSION="0.1.0"
+          else
+            CURRENT_VERSION=$(cat $VERSION_FILE)
+          fi
+          echo "current_version=$CURRENT_VERSION" >> $GITHUB_OUTPUT
+          echo "Current release version: $CURRENT_VERSION"
+
+      - name: Determine Previous Release Version
+        if: ${{ matrix.branch == 'main' }}
+        id: prev_version
+        run: |
+          VERSION_FILE="app-version.txt"
+          set +e
+          PREV_VERSION=$(git show HEAD~1:$VERSION_FILE 2>/dev/null)
+          set -e
+
+          if [ -z "$PREV_VERSION" ]; then
+            PREV_VERSION="none"
+          fi
+
+          echo "prev_version=$PREV_VERSION" >> $GITHUB_OUTPUT
+          echo "Previous release version: $PREV_VERSION"
+
+      - name: Archive Old Release If Major/Minor Changed
+        if: ${{ matrix.branch == 'main' && steps.prev_version.outputs.prev_version != 'none' }}
+        run: |
+          CURRENT_VERSION="${{ steps.current_version.outputs.current_version }}"
+          PREV_VERSION="${{ steps.prev_version.outputs.prev_version }}"
+
+          # Parse current version into major, minor, patch
+          IFS='.' read -r CUR_MAJ CUR_MIN CUR_PATCH <<< "$CURRENT_VERSION"
+          IFS='.' read -r PREV_MAJ PREV_MIN PREV_PATCH <<< "$PREV_VERSION"
+
+          # Compare major and minor
+          if [ "$CUR_MAJ" != "$PREV_MAJ" ] || [ "$CUR_MIN" != "$PREV_MIN" ]; then
+            # Major or minor version changed, archive the old release
+            OLD_VERSION="$PREV_VERSION"
+            ARCHIVE_BRANCH="release/archive/v${OLD_VERSION}"
+
+            git checkout main
+            git branch $ARCHIVE_BRANCH HEAD~1
+            git push origin $ARCHIVE_BRANCH
+            echo "Old release archived as: $ARCHIVE_BRANCH"
+          else
+            echo "Only patch version changed - no archiving needed."
+          fi
+
+      - name: Install dependencies and build
+        run: |
+          yarn install
+          yarn build
+
+      - name: Add .htaccess and error pages
+        run: |
+          # Copy .htaccess from root to dist directory
+          cp .htaccess ./dist/.htaccess
+
+          # Copy 404 error page and assets
+          # mkdir -p ./dist/404
+          # cp src/pages/404/404.html ./dist/404.html
+          # cp src/pages/404/404.css ./dist/404.css
+          # cp src/pages/404/404.js ./dist/404.js
+
+      - name: Set up SSH
+        run: |
+          mkdir -p ~/.ssh
+          echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_rsa
+          chmod 600 ~/.ssh/id_rsa
+          ssh-keyscan -H ${{ secrets.ESKIZ_HOST }} >> ~/.ssh/known_hosts
+          chmod 644 ~/.ssh/known_hosts
+
+      - name: Deploy to Eskiz VPS Server (Main Branch)
+        if: github.ref_name == 'main'
+        run: |
+          # Create the target directory if it doesn't exist
+          ssh -i ~/.ssh/id_rsa -o StrictHostKeyChecking=no ${{ secrets.ESKIZ_USERNAME }}@${{ secrets.ESKIZ_HOST }} "mkdir -p ${{ secrets.ESKIZ_DIR }}"
+
+          # Copy all files, including .htaccess, to the target directory
+          scp -i ~/.ssh/id_rsa -o StrictHostKeyChecking=no -r ./dist/* ${{ secrets.ESKIZ_USERNAME }}@${{ secrets.ESKIZ_HOST }}:${{ secrets.ESKIZ_DIR }}
+          scp -i ~/.ssh/id_rsa -o StrictHostKeyChecking=no ./.htaccess ${{ secrets.ESKIZ_USERNAME }}@${{ secrets.ESKIZ_HOST }}:${{ secrets.ESKIZ_DIR }}
+
+          # Reload Nginx to apply changes
+          ssh -i ~/.ssh/id_rsa -o StrictHostKeyChecking=no ${{ secrets.ESKIZ_USERNAME }}@${{ secrets.ESKIZ_HOST }} "sudo systemctl reload nginx"
