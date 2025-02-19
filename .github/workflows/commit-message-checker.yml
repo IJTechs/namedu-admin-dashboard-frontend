@@ -7,6 +7,9 @@ on:
       - develop
       - feature/*
       - hotfix/*
+      - refactor/*
+      - chore/*
+      - release/*
 
 jobs:
   commit-message-check:
@@ -14,25 +17,40 @@ jobs:
 
     steps:
       - name: Checkout Repository
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: Validate Commit Messages
         run: |
-          regex="^(feat|fix|chore|docs|style|refactor|test|ci): .+"
+          regex="^(feat|fix|chore|docs|style|refactor|test|ci|build|perf|revert|release): .+"
           echo "Validating commit messages..."
           git log --format="%s" ${{ github.event.before }}..${{ github.sha }} | while read line; do
             if ! [[ $line =~ $regex ]]; then
               echo "❌ Invalid commit message: \"$line\""
               echo "Commit messages must follow this format:"
               echo "  <type>: Description of the changes"
+              echo ""
               echo "Allowed types:"
-              echo "  feat, fix, chore, docs, style, refactor, test, ci"
-                    echo ""
+              echo "  - feat: New features"
+              echo "  - fix: Bug fixes"
+              echo "  - chore: Maintenance and minor updates"
+              echo "  - docs: Documentation changes"
+              echo "  - style: Code formatting, no logic changes"
+              echo "  - refactor: Code restructuring without feature changes"
+              echo "  - test: Adding or updating tests"
+              echo "  - ci: Continuous Integration improvements"
+              echo "  - build: Build system changes"
+              echo "  - perf: Performance improvements"
+              echo "  - revert: Revert a previous commit"
+              echo "  - release: Version release"
+              echo ""
               echo "Examples:"
               echo "  feat: Add user authentication flow"
               echo "  fix: Resolve API timeout issue"
               echo "  docs: Update README with setup instructions"
               echo "  refactor: Improve database query performance"
+              echo "  test: Add unit tests for login feature"
+              echo "  build: Update Webpack configuration"
+              echo "  perf: Optimize image loading"
               echo ""
               exit 1
             fi

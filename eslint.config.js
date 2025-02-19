@@ -38,10 +38,7 @@ export default [
       'react/jsx-filename-extension': [1, { extensions: ['.jsx', '.tsx'] }],
 
       // TypeScript rules
-      '@typescript-eslint/no-unused-vars': [
-        'warn',
-        { argsIgnorePattern: '^_' },
-      ],
+      '@typescript-eslint/no-unused-vars': ['warn', { argsIgnorePattern: '^_' }],
       '@typescript-eslint/no-explicit-any': 'warn',
 
       '@typescript-eslint/no-shadow': ['error'],
@@ -52,10 +49,7 @@ export default [
       // General rules
       'no-console': 'warn',
       'no-debugger': 'warn',
-      'no-unused-vars': [
-        'warn',
-        { vars: 'all', args: 'after-used', ignoreRestSiblings: true },
-      ],
+      'no-unused-vars': ['warn', { vars: 'all', args: 'after-used', ignoreRestSiblings: true }],
 
       // React hooks
       'react-hooks/rules-of-hooks': 'error',

@@ -11,16 +11,36 @@ jobs:
     steps:
       - name: Validate PR title
         run: |
-          regex="^(WIP: )?(feat|fix|chore|docs|style|refactor|test|ci): .+"
+          regex="^(WIP: )?(feat|fix|chore|docs|style|refactor|test|ci|build|perf|revert|release): .+"
           title="${{ github.event.pull_request.title }}"
+
+          echo "Checking PR title: \"$title\""
+
           if ! [[ $title =~ $regex ]]; then
             echo "❌ Pull Request title does not follow conventions!"
             echo "Expected format:"
-            echo "  (WIP: )?(feat|fix|chore|docs|style|refactor|test|ci): Short description."
+            echo "  (WIP: )?(feat|fix|chore|docs|style|refactor|test|ci|build|perf|revert|release): Short description."
+            echo ""
+            echo "Allowed prefixes:"
+            echo "  - feat: New features"
+            echo "  - fix: Bug fixes"
+            echo "  - chore: Maintenance tasks"
+            echo "  - docs: Documentation updates"
+            echo "  - style: Code formatting (no logic changes)"
+            echo "  - refactor: Code restructuring (no feature changes)"
+            echo "  - test: Adding or updating tests"
+            echo "  - ci: Continuous Integration updates"
+            echo "  - build: Changes to build system"
+            echo "  - perf: Performance improvements"
+            echo "  - revert: Reverting a previous commit"
+            echo "  - release: Version releases"
+            echo ""
             echo "Examples:"
-            echo "  WIP: feat: Add new login functionality"
-            echo "  fix: Resolve login page bug"
-            echo "  refactor: Improve code readability"
+            echo "  WIP: feat: Implement dark mode"
+            echo "  fix: Resolve login bug"
+            echo "  docs: Update API documentation"
+            echo "  refactor: Optimize database queries"
+            echo "  test: Add unit tests for user service"
             exit 1
           fi
           echo "✅ Pull Request title is valid."

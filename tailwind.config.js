@@ -94,11 +94,12 @@ export default {
         'rgba-white-20': 'rgba(255, 255, 255, 0.20)',
 
         'primary-background': 'var(--color-primary-background)',
+        'primary-accent': 'var( --color-primary)',
         'primary-heading': 'var(--color-primary-heading)',
         'primary-text': 'var(--color-primary-text)',
         'text-black': 'var(--color-text-black)',
         'text-grey': 'var(--color-text-grey)',
-        'text-secondary': 'var(    --color-text-secondary)',
+        'text-secondary': 'var(--color-text-secondary)',
         'cards-white': 'var(--color-cards-white)',
         'cards-lavender-blue': 'var(--color-cards-lavender-blue)',
         'cards-footer': 'var(--color-cards-footer)',
