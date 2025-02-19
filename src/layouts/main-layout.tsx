@@ -1,5 +1,5 @@
-import Content from '@/components/layouts/content';
-import Sidebar from '@/components/layouts/sidebar';
+import Content from '@/components/layouts/Content';
+import Sidebar from '@/components/layouts/Sidebar';
 
 export const DashboardLayout = () => {
   return (
