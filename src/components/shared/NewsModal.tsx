@@ -11,7 +11,7 @@ interface INewsModal {
     readTime?: number;
   };
   onClose: () => void;
-  onConfirm: () => void;
+  onConfirm?: () => void;
 }
 
 const NewsModal = ({ newsData, onClose, onConfirm }: INewsModal) => {
