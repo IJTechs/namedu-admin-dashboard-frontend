@@ -4,7 +4,6 @@ on:
   push:
     branches:
       - main
-      - develop
 
 jobs:
   deploy:
@@ -12,7 +11,7 @@ jobs:
 
     strategy:
       matrix:
-        branch: [main, develop]
+        branch: [main]
 
     steps:
       - name: Checkout code
