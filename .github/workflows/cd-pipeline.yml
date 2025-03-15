@@ -117,7 +117,7 @@ jobs:
           ssh -i ~/.ssh/id_rsa -p 2117 -o StrictHostKeyChecking=no ${{ secrets.ESKIZ_USERNAME }}@${{ secrets.ESKIZ_HOST }} "mkdir -p ${{ secrets.ESKIZ_DIR }}"
 
           # Copy all files, including .htaccess, to the target directory
-          scp -i ~/.ssh/id_rsa -P 2117-o StrictHostKeyChecking=no -r ./dist/* ${{ secrets.ESKIZ_USERNAME }}@${{ secrets.ESKIZ_HOST }}:${{ secrets.ESKIZ_DIR }}
+          scp -i ~/.ssh/id_rsa -P 2117 -o StrictHostKeyChecking=no -r ./dist/* ${{ secrets.ESKIZ_USERNAME }}@${{ secrets.ESKIZ_HOST }}:${{ secrets.ESKIZ_DIR }}
           scp -i ~/.ssh/id_rsa -P 2117 -o StrictHostKeyChecking=no ./.htaccess ${{ secrets.ESKIZ_USERNAME }}@${{ secrets.ESKIZ_HOST }}:${{ secrets.ESKIZ_DIR }}
 
           # Reload Nginx to apply changes
