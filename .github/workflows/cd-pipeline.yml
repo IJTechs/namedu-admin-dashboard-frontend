@@ -107,18 +107,18 @@ jobs:
           mkdir -p ~/.ssh
           echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_rsa
           chmod 600 ~/.ssh/id_rsa
-          ssh-keyscan -H ${{ secrets.ESKIZ_HOST }} >> ~/.ssh/known_hosts
+          ssh-keyscan -p 2117 -H ${{ secrets.ESKIZ_HOST }} >> ~/.ssh/known_hosts
           chmod 644 ~/.ssh/known_hosts
 
       - name: Deploy to Eskiz VPS Server (Main Branch)
         if: github.ref_name == 'main'
         run: |
           # Create the target directory if it doesn't exist
-          ssh -i ~/.ssh/id_rsa -o StrictHostKeyChecking=no ${{ secrets.ESKIZ_USERNAME }}@${{ secrets.ESKIZ_HOST }} "mkdir -p ${{ secrets.ESKIZ_DIR }}"
+          ssh -i ~/.ssh/id_rsa -p 2117 -o StrictHostKeyChecking=no ${{ secrets.ESKIZ_USERNAME }}@${{ secrets.ESKIZ_HOST }} "mkdir -p ${{ secrets.ESKIZ_DIR }}"
 
           # Copy all files, including .htaccess, to the target directory
-          scp -i ~/.ssh/id_rsa -o StrictHostKeyChecking=no -r ./dist/* ${{ secrets.ESKIZ_USERNAME }}@${{ secrets.ESKIZ_HOST }}:${{ secrets.ESKIZ_DIR }}
-          scp -i ~/.ssh/id_rsa -o StrictHostKeyChecking=no ./.htaccess ${{ secrets.ESKIZ_USERNAME }}@${{ secrets.ESKIZ_HOST }}:${{ secrets.ESKIZ_DIR }}
+          scp -i ~/.ssh/id_rsa -P 2117-o StrictHostKeyChecking=no -r ./dist/* ${{ secrets.ESKIZ_USERNAME }}@${{ secrets.ESKIZ_HOST }}:${{ secrets.ESKIZ_DIR }}
+          scp -i ~/.ssh/id_rsa -P 2117 -o StrictHostKeyChecking=no ./.htaccess ${{ secrets.ESKIZ_USERNAME }}@${{ secrets.ESKIZ_HOST }}:${{ secrets.ESKIZ_DIR }}
 
           # Reload Nginx to apply changes
-          ssh -i ~/.ssh/id_rsa -o StrictHostKeyChecking=no ${{ secrets.ESKIZ_USERNAME }}@${{ secrets.ESKIZ_HOST }} "sudo systemctl reload nginx"
+          ssh -i ~/.ssh/id_rsa -p 2117 -o StrictHostKeyChecking=no ${{ secrets.ESKIZ_USERNAME }}@${{ secrets.ESKIZ_HOST }} "sudo systemctl reload nginx"
